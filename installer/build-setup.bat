@@ -19,5 +19,5 @@ echo [2/2] Building installer with Inno Setup...
 if errorlevel 1 exit /b 1
 
 echo.
-echo Output: dist\ScreenAnnotator-Setup-1.0.7.exe
+echo Output: dist\ScreenAnnotator-Setup-1.0.8.exe
 exit /b 0

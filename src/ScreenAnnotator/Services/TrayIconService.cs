@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using DrawingColor = System.Drawing.Color;
 using DrawingPen = System.Drawing.Pen;
@@ -21,7 +22,7 @@ public sealed class TrayIconService : IDisposable
         {
             Text = "屏幕标注白板",
             Visible = true,
-            Icon = CreateIcon()
+            Icon = LoadAppIcon()
         };
 
         var menu = new ContextMenuStrip();
@@ -34,18 +35,39 @@ public sealed class TrayIconService : IDisposable
         _icon.DoubleClick += (_, _) => ToggleOverlayRequested?.Invoke();
     }
 
-    private static Icon CreateIcon()
+    private static Icon LoadAppIcon()
+    {
+        try
+        {
+            var exe = Environment.ProcessPath ?? System.Windows.Forms.Application.ExecutablePath;
+            if (!string.IsNullOrEmpty(exe) && File.Exists(exe))
+            {
+                var extracted = Icon.ExtractAssociatedIcon(exe);
+                if (extracted != null)
+                    return extracted;
+            }
+        }
+        catch
+        {
+            // fall through
+        }
+
+        return CreateFallbackIcon();
+    }
+
+    private static Icon CreateFallbackIcon()
     {
         using var bmp = new Bitmap(32, 32);
         using (var g = Graphics.FromImage(bmp))
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             g.Clear(DrawingColor.Transparent);
-            using var brush = new SolidBrush(DrawingColor.FromArgb(220, 220, 60, 40));
-            g.FillEllipse(brush, 2, 2, 28, 28);
-            using var pen = new DrawingPen(DrawingColor.White, 3);
-            g.DrawLine(pen, 8, 20, 14, 12);
-            g.DrawLine(pen, 14, 12, 24, 10);
+            using var brush = new SolidBrush(DrawingColor.FromArgb(220, 70, 120, 200));
+            g.FillEllipse(brush, 1, 1, 30, 30);
+            using var board = new SolidBrush(DrawingColor.White);
+            g.FillRectangle(board, 8, 8, 16, 14);
+            using var pen = new DrawingPen(DrawingColor.FromArgb(60, 60, 70), 2);
+            g.DrawRectangle(pen, 8, 8, 16, 14);
         }
         var hIcon = bmp.GetHicon();
         return Icon.FromHandle(hIcon);

@@ -12,6 +12,7 @@ publish/
 *.board
 *.png
 !docs/**
+!docs/assets/**/*.png
 
 dist/
 
