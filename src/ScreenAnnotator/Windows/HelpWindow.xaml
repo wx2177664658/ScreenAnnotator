@@ -1,0 +1,30 @@
+<Window x:Class="ScreenAnnotator.Windows.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="帮助说明"
+        Width="480" Height="560"
+        MinWidth="420" MinHeight="360"
+        MaxWidth="520"
+        WindowStartupLocation="CenterScreen"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ResizeMode="CanResizeWithGrip"
+        Background="#FFF7F7F7"
+        FontFamily="Microsoft YaHei UI">
+    <DockPanel Margin="16">
+        <TextBlock DockPanel.Dock="Top" Text="使用帮助" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,4"/>
+        <TextBlock DockPanel.Dock="Top" Text="简要说明主要操作，详细快捷键以「设置」为准。"
+                   Foreground="#FF666666" FontSize="12" Margin="0,0,0,12" TextWrapping="Wrap"/>
+
+        <DockPanel DockPanel.Dock="Bottom" Margin="0,12,0,0" LastChildFill="False">
+            <TextBlock x:Name="VersionText" DockPanel.Dock="Left" VerticalAlignment="Center"
+                       Foreground="#FF888888" FontSize="11"/>
+            <Button DockPanel.Dock="Right" Content="关闭" Width="80" Padding="8,4"
+                    Click="OnClose" IsCancel="True" IsDefault="True"/>
+        </DockPanel>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel x:Name="ContentPanel"/>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>ScreenAnnotator</AssemblyName>
+    <RootNamespace>ScreenAnnotator</RootNamespace>
+    <Product>屏幕标注白板</Product>
+    <Description>Windows 桌面屏幕标注白板</Description>
+    <Version>1.0.7</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.2.1" />
+    <PackageReference Include="OpenCvSharp4" Version="4.10.0.20240616" />
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.10.0.20240616" />
+  </ItemGroup>
+
+  <!-- 可选：将 tools/ffmpeg/ffmpeg.exe 拷到输出，便于录音声轨混流 -->
+  <ItemGroup>
+    <None Include="..\..\tools\ffmpeg\ffmpeg.exe" Condition="Exists('..\..\tools\ffmpeg\ffmpeg.exe')">
+      <Link>ffmpeg\ffmpeg.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
